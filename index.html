@@ -13,7 +13,7 @@ body{
   color:#2f3e34;
 }
 
-/* ========== COVER ========== */
+/* ===== COVER ===== */
 .cover{
   height:100vh;
   background:linear-gradient(160deg,#9caf9a,#6f8f7b);
@@ -32,18 +32,20 @@ body{
   line-height:1.3;
   margin:25px 0;
 }
-.cover .ayat{
+.ayat-arab{
+  font-size:22px;
+  line-height:1.8;
+  margin-bottom:10px;
+  font-family: 'Scheherazade', serif;
+}
+.ayat-arti{
+  font-size:13px;
   font-style:italic;
-  font-size:14px;
   opacity:.95;
 }
-.cover .ayat span{
-  font-size:12px;
-  opacity:.85;
-}
-.cover .subtitle{
+.subtitle{
   font-size:14px;
-  margin-bottom:35px;
+  margin:25px 0 35px;
 }
 .open-btn{
   background:white;
@@ -57,10 +59,8 @@ body{
   box-shadow:0 8px 20px rgba(0,0,0,.25);
 }
 
-/* ========== ISI ========== */
-#isi{
-  display:none;
-}
+/* ===== ISI ===== */
+#isi{display:none;}
 .container{
   max-width:420px;
   margin:20px auto;
@@ -89,6 +89,8 @@ section{
   text-align:left;
   font-size:14px;
 }
+
+/* ===== COUNTDOWN ===== */
 .countdown{
   background:#e6efe9;
   margin:20px;
@@ -110,6 +112,21 @@ section{
   font-weight:bold;
   display:block;
 }
+
+/* ===== MAPS ===== */
+.maps-btn{
+  display:inline-block;
+  margin-top:15px;
+  background:#6f8f7b;
+  color:white;
+  padding:12px 25px;
+  border-radius:30px;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:bold;
+}
+
+/* ===== PANITIA & CLOSING ===== */
 .committee ul{
   list-style:none;
   padding:0;
@@ -133,10 +150,14 @@ section{
 <!-- COVER -->
 <div class="cover" id="cover">
   <div class="cover-inner">
-    <p class="ayat">
-      “Dan peliharalah hubungan silaturahmi”<br>
-      <span>(QS. An-Nisa: 1)</span>
-    </p>
+
+    <div class="ayat-arab">
+      وَاتَّقُوا اللّٰهَ الَّذِيْ تَسَاۤءَلُوْنَ بِهٖ وَالْاَرْحَامَ
+    </div>
+    <div class="ayat-arti">
+      “Dan bertakwalah kepada Allah yang dengan nama-Nya kamu saling meminta,
+      dan peliharalah hubungan silaturahmi.” <br>(QS. An-Nisa: 1)
+    </div>
 
     <h1>
       Undangan<br>
@@ -144,10 +165,10 @@ section{
       Makan Bersama
     </h1>
 
-    <p class="subtitle">
+    <div class="subtitle">
       Jumat, 27 Desember 2025<br>
       Kampung Kecil
-    </p>
+    </div>
 
     <button class="open-btn" onclick="mulai()">
       OPEN UNDANGAN
@@ -155,31 +176,30 @@ section{
   </div>
 </div>
 
-<!-- ISI UNDANGAN -->
+<!-- ISI -->
 <div id="isi">
   <div class="container">
 
     <section class="photo">
-      <img src="foto.jpg" alt="Foto Silaturahmi">
+      <img src="foto.jpg">
       <p class="caption">Merajut Silaturahmi, Menguatkan Ukhuwah</p>
     </section>
 
     <section>
       <p>
-        Segala puji bagi Allah Subhanahu wa Ta’ala yang senantiasa
-        melimpahkan rahmat dan karunia-Nya kepada kita semua.
-        Shalawat serta salam semoga tercurah kepada Nabi Muhammad
-        Shallallahu ‘Alaihi Wasallam.
+        Segala puji bagi Allah Subhanahu wa Ta’ala yang telah melimpahkan rahmat
+        dan karunia-Nya kepada kita semua. Shalawat serta salam semoga tercurah
+        kepada junjungan kita Nabi Muhammad Shallallahu ‘Alaihi Wasallam.
       </p>
 
       <p>
-        Dengan penuh rasa syukur dan mengharap ridho Allah,
-        kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri
-        kegiatan Silaturahmi dan Makan Bersama sebagai sarana
-        mempererat ukhuwah dan kebersamaan.
+        Dengan penuh rasa syukur dan mengharap ridho Allah, kami mengundang
+        Bapak/Ibu/Saudara/i untuk menghadiri kegiatan Silaturahmi dan Makan
+        Bersama sebagai sarana mempererat ukhuwah dan kebersamaan.
       </p>
     </section>
 
+    <!-- COUNTDOWN -->
     <section class="countdown">
       <h3>Menuju Hari Pelaksanaan</h3>
       <div id="timer">
@@ -190,14 +210,21 @@ section{
       </div>
     </section>
 
+    <!-- DETAIL -->
     <section>
       <div class="detail">
-        <p><b>Hari/Tanggal</b> : Jumat, 27 Desember 2025</p>
+        <p><b>Hari / Tanggal</b> : Jumat, 27 Desember 2025</p>
         <p><b>Waktu</b> : 14.00 WIB – selesai</p>
         <p><b>Tempat</b> : Kampung Kecil</p>
       </div>
+
+      <!-- MAPS -->
+      <a class="maps-btn" href="https://maps.app.goo.gl/UvfYtJbW2Mr8gTrr6" target="_blank">
+        📍 Lihat Lokasi di Google Maps
+      </a>
     </section>
 
+    <!-- PANITIA -->
     <section class="committee">
       <h3>Susunan Panitia</h3>
       <ul>
@@ -209,6 +236,7 @@ section{
       </ul>
     </section>
 
+    <!-- PENUTUP -->
     <section class="closing">
       <p>
         Atas perhatian dan kehadiran Bapak/Ibu/Saudara/i,
@@ -228,11 +256,11 @@ function mulai(){
 }
 
 /* COUNTDOWN */
-const targetDate = new Date("December 27, 2025 14:00:00").getTime();
+const targetDate=new Date("December 27, 2025 14:00:00").getTime();
 setInterval(()=>{
   const now=new Date().getTime();
   const d=targetDate-now;
-  if(d<0) return;
+  if(d<0)return;
   days.innerText=Math.floor(d/(1000*60*60*24));
   hours.innerText=Math.floor((d%(1000*60*60*24))/(1000*60*60));
   minutes.innerText=Math.floor((d%(1000*60*60))/(1000*60));
