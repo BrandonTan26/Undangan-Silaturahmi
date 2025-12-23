@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undangan Silaturahmi</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f3f7f5;
+      color: #2f3e34;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: 20px auto;
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    section {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .opening {
+      background-color: #9caf9a;
+      color: white;
+    }
+
+    .opening h1 {
+      margin-bottom: 10px;
+    }
+
+    .basmalah {
+      font-style: italic;
+      font-size: 14px;
+    }
+
+    .photo img {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .caption {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #6b7f73;
+    }
+
+    .content p {
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .detail {
+      background-color: #e6efe9;
+      padding: 15px;
+      border-radius: 12px;
+      margin: 15px 0;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .committee h2 {
+      margin-bottom: 10px;
+      color: #5f7f6b;
+    }
+
+    .committee ul {
+      list-style: none;
+      padding: 0;
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .closing {
+      background-color: #f0f5f2;
+      font-size: 14px;
+    }
+
+    .salam {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #9caf9a;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Backsound -->
+  <audio id="musik" loop>
+    <source src="backsound.mp3" type="audio/mpeg">
+  </audio>
+
+  <button class="music-btn" onclick="toggleMusic()">🔊</button>
+
+  <div class="container">
+
+    <!-- Pembukaan -->
+    <section class="opening">
+      <h1>Undangan Silaturahmi<br>dan Makan Bersama</h1>
+      <p class="basmalah">
+        Assalamu’alaikum Warahmatullahi Wabarakatuh
+      </p>
+    </section>
+
+    <!-- Foto -->
+    <section class="photo">
+      <img src="foto.jpg" alt="Foto Silaturahmi">
+      <p class="caption">Merajut Silaturahmi, Menguatkan Ukhuwah</p>
+    </section>
+
+    <!-- Isi -->
+    <section class="content">
+      <p>
+        Dengan memohon rahmat dan ridho Allah Subhanahu wa Ta’ala,
+        kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri kegiatan:
+      </p>
+
+      <div class="detail">
+        <p><strong>Acara</strong> : Silaturahmi & Makan Bersama</p>
+        <p><strong>Hari/Tanggal</strong> : Jumat, 27 Desember 2025</p>
+        <p><strong>Waktu</strong> : Pukul 14.00 WIB – selesai</p>
+        <p><strong>Tempat</strong> : Kampung Kecil</p>
+      </div>
+
+      <p>
+        Kegiatan ini bertujuan untuk mempererat tali silaturahmi
+        serta menumbuhkan rasa kebersamaan dalam suasana kekeluargaan.
+      </p>
+    </section>
+
+    <!-- Panitia -->
+    <section class="committee">
+      <h2>Susunan Panitia</h2>
+      <ul>
+        <li>Ketua Panitia : Dewi</li>
+        <li>Wakil Ketua : Dwi Febriani</li>
+        <li>Sekretariat : Riski Muhatir</li>
+        <li>Bendahara : Badarr</li>
+        <li>Koordinator Area : Ari Novian</li>
+      </ul>
+    </section>
+
+    <!-- Penutup -->
+    <section class="closing">
+      <p>
+        Besar harapan kami Bapak/Ibu/Saudara/i dapat hadir.
+        Atas perhatian dan kehadirannya kami ucapkan terima kasih.
+      </p>
+      <p class="salam">
+        Wassalamu’alaikum Warahmatullahi Wabarakatuh
+      </p>
+    </section>
+
+  </div>
+
+  <script>
+    const musik = document.getElementById("musik");
+    let isPlaying = false;
+
+    function toggleMusic() {
+      if (isPlaying) {
+        musik.pause();
+        isPlaying = false;
+      } else {
+        musik.play();
+        isPlaying = true;
+      }
+    }
+  </script>
+
+</body>
+</html>
