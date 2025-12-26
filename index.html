@@ -6,6 +6,8 @@
 <title>Undangan Kebersamaan</title>
 
 <style>
+html{scroll-behavior:smooth}
+
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
@@ -14,7 +16,7 @@ body{
   line-height:1.8;
 }
 
-/* ===== NAV KATEGORI ===== */
+/* ===== NAV KATEGORI (KLIK) ===== */
 .nav{
   position:fixed;
   top:12px;
@@ -23,34 +25,44 @@ body{
   background:rgba(255,255,255,.85);
   backdrop-filter:blur(10px);
   display:flex;
-  gap:16px;
-  padding:8px 18px;
+  gap:18px;
+  padding:8px 20px;
   border-radius:30px;
   font-size:12px;
   font-weight:600;
   box-shadow:0 8px 20px rgba(0,0,0,.15);
   z-index:998;
 }
-body.dark .nav{background:rgba(30,30,30,.85);color:#fff}
+.nav a{
+  text-decoration:none;
+  color:#2f3e34;
+}
+body.dark .nav{
+  background:rgba(30,30,30,.85);
+}
+body.dark .nav a{color:#fff}
 
-/* ===== TOGGLE ===== */
+/* ===== TOGGLE BAWAH (KECIL) ===== */
 .toggle{
   position:fixed;
-  top:12px;
-  right:12px;
-  width:42px;
-  height:42px;
+  bottom:16px;
+  right:16px;
+  width:36px;
+  height:36px;
   border:none;
   border-radius:50%;
-  font-size:18px;
+  font-size:16px;
   cursor:pointer;
   background:rgba(255,255,255,.9);
   box-shadow:0 4px 10px rgba(0,0,0,.2);
   z-index:999;
 }
-body.dark .toggle{background:rgba(0,0,0,.7);color:#fff}
+body.dark .toggle{
+  background:rgba(0,0,0,.7);
+  color:white;
+}
 
-/* ===== COVER OPEN ===== */
+/* ===== COVER ===== */
 .cover{
   height:100vh;
   background:
@@ -63,10 +75,7 @@ body.dark .toggle{background:rgba(0,0,0,.7);color:#fff}
   color:white;
   padding:20px;
 }
-.cover h1{
-  font-size:32px;
-  margin-bottom:20px;
-}
+.cover h1{font-size:32px;margin-bottom:20px}
 .cover button{
   padding:14px 36px;
   border:none;
@@ -76,11 +85,10 @@ body.dark .toggle{background:rgba(0,0,0,.7);color:#fff}
   background:white;
   color:#5f7f6b;
   cursor:pointer;
-  box-shadow:0 8px 20px rgba(0,0,0,.3);
 }
 
 /* ===== ISI ===== */
-#isi{display:none;}
+#isi{display:none}
 .container{
   max-width:420px;
   margin:20px auto;
@@ -94,15 +102,8 @@ section{
   text-align:center;
 }
 
-.ayat-arab{
-  font-size:22px;
-  margin-bottom:12px;
-}
-.ayat-arti{
-  font-size:13px;
-  font-style:italic;
-  color:#6b7f73;
-}
+.ayat-arab{font-size:22px;margin-bottom:12px}
+.ayat-arti{font-size:13px;font-style:italic;color:#6b7f73}
 
 .detail{
   background:#e6efe9;
@@ -121,7 +122,6 @@ section{
   border-radius:30px;
   text-decoration:none;
   font-weight:bold;
-  font-size:14px;
 }
 
 .photo img{
@@ -138,37 +138,26 @@ section{
   color:#6b7f73;
   background:#f3f7f5;
 }
-.footer-title{
-  font-weight:600;
-  font-size:13px;
-}
-.footer-credit{
-  font-size:11px;
-  opacity:.85;
-}
 
 /* ===== DARK MODE ===== */
-body.dark{
-  background:#121212;
-  color:#e0e0e0;
-}
-body.dark .container{background:#1e1e1e;}
-body.dark .detail{background:#2a2a2a;}
-body.dark .footer{background:#121212;color:#aaaaaa;}
-body.dark .nav{background:rgba(30,30,30,.85);color:#fff;}
-body.dark .toggle{background:rgba(0,0,0,.7);color:#fff;}
+body.dark{background:#121212;color:#e0e0e0}
+body.dark .container{background:#1e1e1e}
+body.dark .detail{background:#2a2a2a}
+body.dark .footer{background:#121212;color:#aaaaaa}
 </style>
 </head>
 
 <body>
 
-<!-- NAV + TOGGLE -->
+<!-- NAV (KLIK) -->
 <div class="nav">
-  <span>Opening</span>
-  <span>Jadwal</span>
-  <span>Kenangan</span>
-  <span>Penutup</span>
+  <a href="#opening">Opening</a>
+  <a href="#jadwal">Jadwal</a>
+  <a href="#kenangan">Foto</a>
+  <a href="#penutup">Penutup</a>
 </div>
+
+<!-- TOGGLE -->
 <button class="toggle" onclick="toggleTheme()">🌙</button>
 
 <!-- MUSIK -->
@@ -189,7 +178,7 @@ body.dark .toggle{background:rgba(0,0,0,.7);color:#fff;}
 <div class="container">
 
 <!-- OPENING -->
-<section>
+<section id="opening">
   <div class="ayat-arab">
     وَاتَّقُوا اللّٰهَ الَّذِيْ تَسَاۤءَلُوْنَ بِهٖ وَالْاَرْحَامَ
   </div>
@@ -205,14 +194,14 @@ body.dark .toggle{background:rgba(0,0,0,.7);color:#fff;}
   </p>
 
   <p>
-    Undangan kebersamaan ini kami sampaikan sebagai wujud rasa syukur atas
-    perjalanan yang telah kita lalui bersama, serta sebagai ikhtiar untuk
+    Undangan kebersamaan ini disampaikan sebagai wujud rasa syukur atas
+    perjalanan yang telah kita lalui bersama serta sebagai ikhtiar untuk
     menjaga dan mempererat tali silaturahmi.
   </p>
 </section>
 
-<!-- JADWAL + MAPS -->
-<section>
+<!-- JADWAL -->
+<section id="jadwal">
   <div class="detail">
     <p><b>Hari / Tanggal</b> : Selasa, 30 Desember 2025</p>
     <p><b>Waktu</b> : 16.00 WIB (sehabis selesai meeting COS)</p>
@@ -226,8 +215,8 @@ body.dark .toggle{background:rgba(0,0,0,.7);color:#fff;}
   </a>
 </section>
 
-<!-- FOTO KENANGAN -->
-<section class="photo">
+<!-- FOTO -->
+<section id="kenangan" class="photo">
   <h3>Kenangan Bersama</h3>
   <img src="kenangan1.jpg">
   <img src="kenangan2.jpg">
@@ -238,7 +227,7 @@ body.dark .toggle{background:rgba(0,0,0,.7);color:#fff;}
 </section>
 
 <!-- PENUTUP -->
-<section>
+<section id="penutup">
   <p>
     Dengan segala kerendahan hati, kami menyampaikan terima kasih yang
     sebesar-besarnya kepada <b>Bapak Ari Novian</b> atas bimbingan,
@@ -246,23 +235,16 @@ body.dark .toggle{background:rgba(0,0,0,.7);color:#fff;}
   </p>
 
   <p>
-    Setiap kebersamaan dan nasihat akan selalu kami simpan sebagai bagian
-    dari perjalanan yang bermakna.
-  </p>
-
-  <p>
-    Semoga Allah Subhanahu wa Ta’ala membalas setiap kebaikan dengan pahala
-    yang berlipat dan keberkahan yang tiada putus.
+    Semoga setiap kebaikan dibalas oleh Allah Subhanahu wa Ta’ala dengan
+    pahala yang berlipat dan keberkahan yang tiada putus.
   </p>
 
   <p><b>Wassalamu’alaikum Warahmatullahi Wabarakatuh</b></p>
 </section>
 
 <footer class="footer">
-  <div class="footer-title">© Undangan Kebersamaan Area Ari Novian</div>
-  <div class="footer-credit">
-    Crafted with ❤️ by D&amp;D · A Digital Creative Studio
-  </div>
+  © Undangan Kebersamaan Area Ari Novian<br>
+  Crafted with ❤️ by D&amp;D · A Digital Creative Studio
 </footer>
 
 </div>
@@ -270,9 +252,9 @@ body.dark .toggle{background:rgba(0,0,0,.7);color:#fff;}
 
 <script>
 function buka(){
-  const audio = document.getElementById("musik");
-  audio.currentTime = 0;
-  audio.muted = false;
+  const audio=document.getElementById("musik");
+  audio.currentTime=0;
+  audio.muted=false;
   audio.play().catch(()=>{});
   document.getElementById("cover").style.display="none";
   document.getElementById("isi").style.display="block";
