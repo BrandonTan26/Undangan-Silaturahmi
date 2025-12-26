@@ -1,269 +1,441 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Undangan Kebersamaan</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Undangan Kebersamaan</title>
+  <meta name="theme-color" content="#6f8f7b" />
+  <style>
+    :root{
+      --bg:#f3f7f5;
+      --card:#ffffff;
+      --text:#233127;
+      --muted:#6b7f73;
+      --accent:#6f8f7b;
+      --accent-2:#4e6e5c;
+      --shadow:0 10px 28px rgba(0,0,0,.12);
+      --navH:52px;
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.8;
+    }
 
-<style>
-html{scroll-behavior:smooth}
+    /* === FIX: anchor offset supaya section ga ketutup nav === */
+    section{scroll-margin-top: calc(var(--navH) + 18px);}
 
-body{
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:#f3f7f5;
-  color:#2f3e34;
-  line-height:1.8;
-}
+    /* ===== NAV (KLIKABLE, ADA ACTIVE) ===== */
+    .nav{
+      position:fixed;
+      top:12px;
+      left:50%;
+      transform:translateX(-50%);
+      height:var(--navH);
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.86);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      box-shadow:var(--shadow);
+      z-index:9999; /* paling atas: ga ada drama ketiban */
+      pointer-events:auto;
+    }
+    .nav a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 14px;
+      border-radius:999px;
+      text-decoration:none;
+      color:var(--text);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.2px;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      transition:transform .15s ease, background .15s ease, color .15s ease;
+    }
+    .nav a:hover{background:rgba(111,143,123,.12)}
+    .nav a:active{transform:scale(.98)}
+    .nav a.active{
+      background:rgba(111,143,123,.18);
+      color:var(--accent-2);
+    }
 
-/* ===== NAV KATEGORI (KLIK) ===== */
-.nav{
-  position:fixed;
-  top:12px;
-  left:50%;
-  transform:translateX(-50%);
-  background:rgba(255,255,255,.85);
-  backdrop-filter:blur(10px);
-  display:flex;
-  gap:18px;
-  padding:8px 20px;
-  border-radius:30px;
-  font-size:12px;
-  font-weight:600;
-  box-shadow:0 8px 20px rgba(0,0,0,.15);
-  z-index:998;
-}
-.nav a{
-  text-decoration:none;
-  color:#2f3e34;
-}
-body.dark .nav{
-  background:rgba(30,30,30,.85);
-}
-body.dark .nav a{color:#fff}
+    /* nav disembunyiin saat cover (biar cover bersih) */
+    body.covering .nav{display:none}
 
-/* ===== TOGGLE BAWAH (KECIL) ===== */
-.toggle{
-  position:fixed;
-  bottom:16px;
-  right:16px;
-  width:36px;
-  height:36px;
-  border:none;
-  border-radius:50%;
-  font-size:16px;
-  cursor:pointer;
-  background:rgba(255,255,255,.9);
-  box-shadow:0 4px 10px rgba(0,0,0,.2);
-  z-index:999;
-}
-body.dark .toggle{
-  background:rgba(0,0,0,.7);
-  color:white;
-}
+    /* ===== TOGGLE (KECIL, DI BAWAH) ===== */
+    .toggle{
+      position:fixed;
+      bottom:16px;
+      right:16px;
+      width:40px;
+      height:40px;
+      border:none;
+      border-radius:50%;
+      font-size:16px;
+      cursor:pointer;
+      background:rgba(255,255,255,.92);
+      box-shadow:0 10px 22px rgba(0,0,0,.18);
+      z-index:9999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:transform .15s ease, opacity .15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .toggle:active{transform:scale(.97)}
+    body.covering .toggle{opacity:.0; pointer-events:none;}
 
-/* ===== COVER ===== */
-.cover{
-  height:100vh;
-  background:
-    linear-gradient(rgba(111,143,123,.65),rgba(111,143,123,.65)),
-    url('foto.jpg') center/cover no-repeat;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  color:white;
-  padding:20px;
-}
-.cover h1{font-size:32px;margin-bottom:20px}
-.cover button{
-  padding:14px 36px;
-  border:none;
-  border-radius:30px;
-  font-size:16px;
-  font-weight:bold;
-  background:white;
-  color:#5f7f6b;
-  cursor:pointer;
-}
+    /* ===== COVER ===== */
+    .cover{
+      min-height:100vh;
+      background:
+        linear-gradient(rgba(111,143,123,.72),rgba(111,143,123,.72)),
+        url('foto.jpg') center/cover no-repeat;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:white;
+      padding:22px;
+      position:relative;
+      overflow:hidden;
+    }
+    .cover::after{
+      content:"";
+      position:absolute;
+      inset:-40px;
+      background:radial-gradient(circle at 30% 20%, rgba(255,255,255,.22), transparent 55%),
+                 radial-gradient(circle at 70% 80%, rgba(255,255,255,.12), transparent 60%);
+      pointer-events:none;
+    }
+    .cover .inner{
+      position:relative;
+      max-width:520px;
+      width:100%;
+      padding:18px 18px 10px;
+    }
+    .cover h1{
+      margin:0 0 14px;
+      font-size:34px;
+      line-height:1.2;
+      letter-spacing:.3px;
+      text-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    .cover p{
+      margin:0 0 18px;
+      opacity:.95;
+      font-size:14px;
+    }
+    .cover button{
+      padding:14px 34px;
+      border:none;
+      border-radius:999px;
+      font-size:15px;
+      font-weight:800;
+      background:white;
+      color:var(--accent-2);
+      cursor:pointer;
+      box-shadow:0 12px 26px rgba(0,0,0,.20);
+      transition:transform .15s ease, opacity .15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cover button:active{transform:scale(.98)}
+    .hint{
+      margin-top:14px;
+      font-size:12px;
+      opacity:.9;
+    }
 
-/* ===== ISI ===== */
-#isi{display:none}
-.container{
-  max-width:420px;
-  margin:20px auto;
-  background:white;
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 8px 20px rgba(0,0,0,.1);
-}
-section{
-  padding:26px;
-  text-align:center;
-}
+    /* ===== ISI ===== */
+    #isi{display:none}
+    .container{
+      max-width:460px;
+      margin:18px auto 22px;
+      background:var(--card);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(0,0,0,.04);
+    }
+    .top-gap{
+      height:calc(var(--navH) + 10px);
+      background:linear-gradient(to bottom, rgba(243,247,245,1), rgba(243,247,245,0));
+    }
+    section{
+      padding:26px 22px;
+      text-align:center;
+    }
+    section h3{
+      margin:0 0 12px;
+      font-size:16px;
+      letter-spacing:.2px;
+    }
 
-.ayat-arab{font-size:22px;margin-bottom:12px}
-.ayat-arti{font-size:13px;font-style:italic;color:#6b7f73}
+    .ayat{
+      padding:18px 16px;
+      border-radius:16px;
+      background:linear-gradient(180deg, rgba(111,143,123,.10), rgba(111,143,123,.06));
+      border:1px solid rgba(111,143,123,.18);
+      margin-bottom:16px;
+    }
+    .ayat-arab{font-size:22px;margin:0 0 10px}
+    .ayat-arti{font-size:13px;font-style:italic;color:var(--muted);margin:0}
 
-.detail{
-  background:#e6efe9;
-  padding:18px;
-  border-radius:14px;
-  text-align:left;
-  font-size:14px;
-}
+    .detail{
+      background:rgba(111,143,123,.10);
+      padding:18px 16px;
+      border-radius:16px;
+      text-align:left;
+      font-size:14px;
+      border:1px solid rgba(111,143,123,.18);
+    }
+    .detail p{margin:8px 0}
+    .maps-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin-top:14px;
+      padding:12px 18px;
+      background:var(--accent);
+      color:white;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:800;
+      box-shadow:0 12px 22px rgba(111,143,123,.26);
+      transition:transform .15s ease, opacity .15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .maps-btn:active{transform:scale(.98)}
+    .maps-ico{
+      width:18px;height:18px;display:inline-block;
+    }
 
-.maps-btn{
-  display:inline-block;
-  margin-top:14px;
-  padding:12px 24px;
-  background:#6f8f7b;
-  color:white;
-  border-radius:30px;
-  text-decoration:none;
-  font-weight:bold;
-}
+    .photo{
+      text-align:center;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+    .grid img{
+      width:100%;
+      display:block;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 10px 18px rgba(0,0,0,.06);
+      background:#fff;
+    }
 
-.photo img{
-  width:100%;
-  border-radius:12px;
-  margin-bottom:14px;
-}
+    .footer{
+      text-align:center;
+      padding:18px 12px 22px;
+      font-size:12px;
+      color:var(--muted);
+      background:transparent;
+    }
 
-/* ===== FOOTER ===== */
-.footer{
-  text-align:center;
-  padding:22px 10px;
-  font-size:12px;
-  color:#6b7f73;
-  background:#f3f7f5;
-}
-
-/* ===== DARK MODE ===== */
-body.dark{background:#121212;color:#e0e0e0}
-body.dark .container{background:#1e1e1e}
-body.dark .detail{background:#2a2a2a}
-body.dark .footer{background:#121212;color:#aaaaaa}
-</style>
+    /* ===== DARK MODE ===== */
+    body.dark{
+      --bg:#0f1110;
+      --card:#171a18;
+      --text:#e9efe9;
+      --muted:#a6b3ab;
+      --shadow:0 14px 34px rgba(0,0,0,.45);
+    }
+    body.dark .nav{background:rgba(18,18,18,.78)}
+    body.dark .nav a{color:var(--text)}
+    body.dark .nav a.active{color:#bfe0cf;background:rgba(111,143,123,.18)}
+    body.dark .toggle{background:rgba(0,0,0,.55); color:#fff}
+    body.dark .grid img{border-color:rgba(255,255,255,.08)}
+  </style>
 </head>
 
-<body>
+<body class="covering">
+  <!-- NAV -->
+  <nav class="nav" aria-label="Navigasi Undangan">
+    <a href="#opening" data-target="opening">Opening</a>
+    <a href="#jadwal" data-target="jadwal">Jadwal</a>
+    <a href="#kenangan" data-target="kenangan">Foto</a>
+    <a href="#penutup" data-target="penutup">Penutup</a>
+  </nav>
 
-<!-- NAV (KLIK) -->
-<div class="nav">
-  <a href="#opening">Opening</a>
-  <a href="#jadwal">Jadwal</a>
-  <a href="#kenangan">Foto</a>
-  <a href="#penutup">Penutup</a>
-</div>
+  <!-- TOGGLE -->
+  <button class="toggle" type="button" id="themeBtn" aria-label="Ubah tema" onclick="toggleTheme()">🌙</button>
 
-<!-- TOGGLE -->
-<button class="toggle" onclick="toggleTheme()">🌙</button>
+  <!-- MUSIK -->
+  <audio id="musik" loop preload="auto">
+    <source src="backsound.mp3" type="audio/mpeg" />
+  </audio>
 
-<!-- MUSIK -->
-<audio id="musik" loop preload="auto">
-  <source src="backsound.mp3" type="audio/mpeg">
-</audio>
+  <!-- COVER -->
+  <header class="cover" id="cover">
+    <div class="inner">
+      <h1>Undangan Kebersamaan</h1>
+      <p>Silaturahmi, syukur, dan kebersamaan. Satu momen kecil yang layak jadi kenangan besar.</p>
+      <button type="button" onclick="buka()">OPEN UNDANGAN</button>
+      <div class="hint">Aktifkan suara untuk pengalaman terbaik.</div>
+    </div>
+  </header>
 
-<!-- COVER -->
-<div class="cover" id="cover">
-  <div>
-    <h1>Undangan Kebersamaan</h1>
-    <button onclick="buka()">OPEN UNDANGAN</button>
-  </div>
-</div>
+  <!-- ISI -->
+  <main id="isi">
+    <div class="container">
+      <div class="top-gap"></div>
 
-<!-- ISI -->
-<div id="isi">
-<div class="container">
+      <!-- OPENING -->
+      <section id="opening">
+        <div class="ayat">
+          <div class="ayat-arab">وَاتَّقُوا اللّٰهَ الَّذِيْ تَسَاۤءَلُوْنَ بِهٖ وَالْاَرْحَامَ</div>
+          <div class="ayat-arti">“Dan bertakwalah kepada Allah yang dengan nama-Nya kamu saling meminta, dan peliharalah hubungan silaturahmi.” (QS. An-Nisa: 1)</div>
+        </div>
 
-<!-- OPENING -->
-<section id="opening">
-  <div class="ayat-arab">
-    وَاتَّقُوا اللّٰهَ الَّذِيْ تَسَاۤءَلُوْنَ بِهٖ وَالْاَرْحَامَ
-  </div>
-  <div class="ayat-arti">
-    “Dan bertakwalah kepada Allah yang dengan nama-Nya kamu saling meminta,
-    dan peliharalah hubungan silaturahmi.” (QS. An-Nisa: 1)
-  </div>
+        <p>Segala puji bagi Allah Subhanahu wa Ta’ala yang telah melimpahkan rahmat dan karunia-Nya kepada kita semua. Shalawat serta salam semoga tercurah kepada Nabi Muhammad Shallallahu ‘Alaihi Wasallam.</p>
+        <p>Undangan kebersamaan ini disampaikan sebagai wujud rasa syukur atas perjalanan yang telah kita lalui bersama, sekaligus sebagai ikhtiar untuk menjaga dan mempererat tali silaturahmi.</p>
+      </section>
 
-  <p>
-    Segala puji bagi Allah Subhanahu wa Ta’ala yang telah melimpahkan rahmat dan
-    karunia-Nya kepada kita semua. Shalawat serta salam semoga tercurah kepada
-    Nabi Muhammad Shallallahu ‘Alaihi Wasallam.
-  </p>
+      <!-- JADWAL -->
+      <section id="jadwal">
+        <h3>Jadwal Acara</h3>
 
-  <p>
-    Undangan kebersamaan ini disampaikan sebagai wujud rasa syukur atas
-    perjalanan yang telah kita lalui bersama serta sebagai ikhtiar untuk
-    menjaga dan mempererat tali silaturahmi.
-  </p>
-</section>
+        <div class="detail">
+          <p><b>Hari / Tanggal</b> : Selasa, 30 Desember 2025</p>
+          <p><b>Waktu</b> : 16.00 WIB (sehabis selesai meeting COS)</p>
+          <p><b>Tempat</b> : Kampung Kecil</p>
+        </div>
 
-<!-- JADWAL -->
-<section id="jadwal">
-  <div class="detail">
-    <p><b>Hari / Tanggal</b> : Selasa, 30 Desember 2025</p>
-    <p><b>Waktu</b> : 16.00 WIB (sehabis selesai meeting COS)</p>
-    <p><b>Tempat</b> : Kampung Kecil</p>
-  </div>
+        <a class="maps-btn" href="https://maps.app.goo.gl/cB6EqHGwnKzEKHyz5" target="_blank" rel="noopener">
+          <svg class="maps-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 22s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z" stroke="white" stroke-width="2"/>
+            <path d="M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" stroke="white" stroke-width="2"/>
+          </svg>
+          Lihat Lokasi di Google Maps
+        </a>
+      </section>
 
-  <a class="maps-btn"
-     href="https://maps.app.goo.gl/cB6EqHGwnKzEKHyz5"
-     target="_blank">
-     📍 Lihat Lokasi di Google Maps
-  </a>
-</section>
+      <!-- FOTO -->
+      <section id="kenangan" class="photo">
+        <h3>Kenangan Bersama</h3>
+        <div class="grid">
+          <img src="kenangan1.jpg" alt="Kenangan 1" loading="lazy">
+          <img src="kenangan2.jpg" alt="Kenangan 2" loading="lazy">
+          <img src="kenangan3.jpg" alt="Kenangan 3" loading="lazy">
+          <img src="kenangan4.jpg" alt="Kenangan 4" loading="lazy">
+          <img src="kenangan5.jpg" alt="Kenangan 5" loading="lazy">
+          <img src="kenangan6.jpg" alt="Kenangan 6" loading="lazy">
+        </div>
+      </section>
 
-<!-- FOTO -->
-<section id="kenangan" class="photo">
-  <h3>Kenangan Bersama</h3>
-  <img src="kenangan1.jpg">
-  <img src="kenangan2.jpg">
-  <img src="kenangan3.jpg">
-  <img src="kenangan4.jpg">
-  <img src="kenangan5.jpg">
-  <img src="kenangan6.jpg">
-</section>
+      <!-- PENUTUP -->
+      <section id="penutup">
+        <p>Dengan segala kerendahan hati, kami menyampaikan terima kasih yang sebesar-besarnya kepada <b>Bapak Ari Novian</b> atas bimbingan, perhatian, dan ketulusan yang selama ini telah diberikan.</p>
+        <p>Semoga setiap kebaikan dibalas oleh Allah Subhanahu wa Ta’ala dengan pahala yang berlipat dan keberkahan yang tiada putus.</p>
+        <p><b>Wassalamu’alaikum Warahmatullahi Wabarakatuh</b></p>
+      </section>
 
-<!-- PENUTUP -->
-<section id="penutup">
-  <p>
-    Dengan segala kerendahan hati, kami menyampaikan terima kasih yang
-    sebesar-besarnya kepada <b>Bapak Ari Novian</b> atas bimbingan,
-    perhatian, dan ketulusan yang selama ini telah diberikan.
-  </p>
+      <footer class="footer">
+        © Undangan Kebersamaan Area Ari Novian
+        <br> Crafted with ❤️ by D&amp;D · A Digital Creative Studio
+      </footer>
+    </div>
+  </main>
 
-  <p>
-    Semoga setiap kebaikan dibalas oleh Allah Subhanahu wa Ta’ala dengan
-    pahala yang berlipat dan keberkahan yang tiada putus.
-  </p>
+  <script>
+    // ===== Theme persist =====
+    (function initTheme(){
+      try{
+        const saved = localStorage.getItem("theme");
+        if(saved === "dark") document.body.classList.add("dark");
+        updateThemeIcon();
+      }catch(e){}
+    })();
 
-  <p><b>Wassalamu’alaikum Warahmatullahi Wabarakatuh</b></p>
-</section>
+    function updateThemeIcon(){
+      const btn = document.getElementById("themeBtn");
+      const isDark = document.body.classList.contains("dark");
+      btn.textContent = isDark ? "☀️" : "🌙";
+    }
 
-<footer class="footer">
-  © Undangan Kebersamaan Area Ari Novian<br>
-  Crafted with ❤️ by D&amp;D · A Digital Creative Studio
-</footer>
+    function toggleTheme(){
+      document.body.classList.toggle("dark");
+      updateThemeIcon();
+      try{
+        localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+      }catch(e){}
+    }
 
-</div>
-</div>
+    // ===== Open invitation =====
+    function buka(){
+      // tampilkan isi + munculkan nav/toggle
+      document.getElementById("cover").style.display = "none";
+      document.getElementById("isi").style.display = "block";
+      document.body.classList.remove("covering");
 
-<script>
-function buka(){
-  const audio=document.getElementById("musik");
-  audio.currentTime=0;
-  audio.muted=false;
-  audio.play().catch(()=>{});
-  document.getElementById("cover").style.display="none";
-  document.getElementById("isi").style.display="block";
-}
+      // start audio (best effort)
+      const audio = document.getElementById("musik");
+      audio.currentTime = 0;
+      audio.muted = false;
+      audio.play().catch(()=>{});
+      // highlight nav awal
+      setActiveLink("opening");
+      // scroll ke opening biar rapi
+      document.getElementById("opening").scrollIntoView({behavior:"smooth", block:"start"});
+    }
 
-function toggleTheme(){
-  document.body.classList.toggle("dark");
-}
-</script>
+    // ===== Nav click: pastikan selalu works, plus close smooth =====
+    document.querySelectorAll(".nav a").forEach(a=>{
+      a.addEventListener("click", (e)=>{
+        // kalau masih di cover, tahan dulu (biar ga "klik tapi ga ke mana-mana")
+        if(document.body.classList.contains("covering")){
+          e.preventDefault();
+          return;
+        }
+        // smooth scroll manual supaya konsisten
+        e.preventDefault();
+        const id = a.getAttribute("href").slice(1);
+        const el = document.getElementById(id);
+        if(!el) return;
+        el.scrollIntoView({behavior:"smooth", block:"start"});
+        setActiveLink(id);
+      }, {passive:false});
+    });
 
+    function setActiveLink(id){
+      document.querySelectorAll(".nav a").forEach(x=>x.classList.remove("active"));
+      const active = document.querySelector('.nav a[data-target="'+id+'"]');
+      if(active) active.classList.add("active");
+    }
+
+    // ===== Active highlight on scroll (IntersectionObserver) =====
+    const sections = ["opening","jadwal","kenangan","penutup"]
+      .map(id=>document.getElementById(id))
+      .filter(Boolean);
+
+    const obs = new IntersectionObserver((entries)=>{
+      // cari entry yang paling "kelihatan"
+      const visible = entries
+        .filter(en=>en.isIntersecting)
+        .sort((a,b)=>b.intersectionRatio - a.intersectionRatio)[0];
+      if(visible && visible.target && !document.body.classList.contains("covering")){
+        setActiveLink(visible.target.id);
+      }
+    }, {threshold:[0.25,0.45,0.6,0.75]});
+
+    sections.forEach(sec=>obs.observe(sec));
+  </script>
 </body>
 </html>
